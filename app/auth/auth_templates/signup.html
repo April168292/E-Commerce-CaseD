@@ -1,0 +1,30 @@
+{% extends 'base.html'  %}
+
+{% block content %}
+<form method="POST" class="sign-up-container"  style="max-width:480px;margin:auto;">
+    {{ form.hidden_tag() }}
+    <div class="form-group" >   
+        <fieldset>
+            {{ form.username.label }}
+            {{ form.username(class='form-control', placeholder='Username', autocomplete="off") }}
+        </fieldset>
+        <fieldset>
+            {{ form.email.label }}
+            {{ form.email(class='form-control', placeholder='email', autocomplete="off") }}
+        </fieldset>
+        <fieldset>
+            {{ form.password.label }}
+            {{ form.password(class='form-control', placeholder='Password',autocomplete="off") }}
+        </fieldset>
+        <fieldset>
+            {{ form.confirm_password(class='form-control', placeholder='Confirm Password') }}
+        </fieldset>
+        {{ form.submit(class='btn btn-dark')}}
+
+  </form>
+</div>
+    
+
+
+
+{% endblock content %}

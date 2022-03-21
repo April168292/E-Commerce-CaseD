@@ -1,0 +1,37 @@
+{% extends 'base.html'  %}
+
+{% block content %}
+<form method="POST" form style="max-width:480px;margin:auto;">
+    {{form.hidden_tag () }}
+    <div class="form-group">
+        <fieldset>
+            {{ form.username.label }}
+            {{ form.username(class='form-control', placeholder='Username') }}
+        </fieldset>
+        <fieldset>
+            {{ form.password.label }}
+            {{ form.password(class='form-control', placeholder='Password') }}
+        </fieldset>
+        <fieldset>
+            {{ form.remember_me.label(class='form-check-label') }}
+            {{ form.remember_me(class='form-check-input') }}
+        </fieldset>
+        {{ form.submit(class='btn btn-dark')}}
+
+    </div>
+
+
+
+
+
+
+
+</form>
+
+
+
+
+    
+
+
+{% endblock content %}
