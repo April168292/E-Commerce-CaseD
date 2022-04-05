@@ -4,6 +4,7 @@ from config import Config
 #import our blueprints
 from .auth.routes import auth
 from .shop.routes import shop
+from .pokemon.routes import pokemon
 
 
 #import our db related
@@ -11,8 +12,12 @@ from .models import db, User
 from flask_migrate import Migrate
 from flask_login import LoginManager
 
+# API CROSS ORIGIN IMPORT
+from flask_cors import CORS
+
 app = Flask(__name__)
 login = LoginManager()
+CORS(app)
 
 @login.user_loader
 def load_user(user_id):
@@ -20,6 +25,7 @@ def load_user(user_id):
 
 app.register_blueprint(auth)
 app.register_blueprint(shop)
+app.register_blueprint(pokemon)
 
 
 app.config.from_object(Config)

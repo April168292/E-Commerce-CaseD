@@ -3,7 +3,7 @@ from flask_login import current_user, login_required
 
 shop = Blueprint('shop',__name__, template_folder='shop_templates')
 
-from app.models import db, Product, Cart
+from app.models import Post, db, Product, Cart
 
 
 @shop.route('/products')
@@ -42,13 +42,26 @@ def addtocart(product_id):
     db.session.commit()
     return redirect(url_for('shop.allProducts'))
 
-@shop.route('/cart/add', methods=["POST"])
-def addtocart2():
-    print(request.data)
-    # cart_item = Cart(current_user.id, product_id)
-    # db.session.add(cart_item)
-    # db.session.commit()
-    return redirect(url_for('shop.allProducts'))
+
+#API STARTS HERE
+
+@shop.route('/api/products')
+def apiProducts():
+    products = Product.query.all()[::-1]
+    return {
+        'status': 'ok',
+        'total_results': len(products),
+        'products': [p.to_dict() for p in products]
+    }
+
+@shop.route('/api/login', methods =["POST"])
+def apiLogin():
+    return {
+        'status': 'ok',
+    }
 
 
+    
+    
 
+    

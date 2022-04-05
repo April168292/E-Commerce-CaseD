@@ -33,6 +33,17 @@ class Post(db.Model, ):
         self.image = image 
         self.caption = caption
 
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'title': self.title,
+            'image' : self.image,
+            'caption': self.caption,
+            'date_created':self.date_created,
+            'user_id' : self.user_id 
+
+        }
+
 class Product(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     product_name = db.Column(db.String(200), nullable=False, unique=False)
@@ -63,5 +74,16 @@ class Cart(db.Model):
     def __init__(self, user_id, product_id):
         self.user_id = user_id
         self.product_id = product_id
+
+class Pokedex(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(200), nullable=False, unique=False)
+    image = db.Column(db.String(300))
+    abilities = db.Column(db.String(300))
+
+    def __init__(self, name, image, abilities):
+        self.name = name
+        self.image = image 
+        self.abilities = abilities
         
     
