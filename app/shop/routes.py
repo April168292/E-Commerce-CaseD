@@ -54,6 +54,22 @@ def apiProducts():
         'products': [p.to_dict() for p in products]
     }
 
+@shop.route('/api/products/<int:product_id')
+def apiSinglePost(product_id):
+    product = Product.query.filter_by(id=product_id).first()
+    if product is None:
+        return {
+            'status': 'not ok',
+            'total_results': 0,
+        }
+    return {
+        'status': 'ok',
+        'total_results': 1,
+        'products': product.to.dict()
+    }
+        
+
+
 @shop.route('/api/login', methods =["POST"])
 def apiLogin():
     return {
