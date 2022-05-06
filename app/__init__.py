@@ -9,6 +9,7 @@ from .pokemon.routes import pokemon
 
 #import our db related
 from .models import db, User
+from .auth.routes import mail
 from flask_migrate import Migrate
 from flask_login import LoginManager
 
@@ -33,6 +34,10 @@ app.config.from_object(Config)
 # initialize our database to work with our app
 db.init_app(app)
 login.init_app(app)
+mail.init_app(app)
+
+
+login.login_view = "auth.logMeIn"
 
 migrate = Migrate(app, db)
 

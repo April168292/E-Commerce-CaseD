@@ -12,6 +12,10 @@
                 <li>{{ a }}</li>
             {% endfor %}
         </ul>
+        <form method="POST" action="{{ url_for('pokemon.addToPokedex') }}">
+            <input class="d-none" type="text" name='name' value="{{ name }}">
+            <button type='submit' class="btn btn-primary">Add To Pokedex</button>
+        </form>
     </div>
 </div>
 

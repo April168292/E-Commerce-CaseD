@@ -1,9 +1,10 @@
 from flask import Blueprint, redirect, render_template, request, url_for
 from flask_login import current_user, login_required
+from app.apiauthhelper import token_required
 
 shop = Blueprint('shop',__name__, template_folder='shop_templates')
 
-from app.models import Post, db, Product, Cart
+from app.models import Post, db, Product, Cart, User
 
 
 @shop.route('/products')
@@ -47,15 +48,15 @@ def addtocart(product_id):
 
 @shop.route('/api/products')
 def apiProducts():
-    products = Product.query.all()[::-1]
+    products = Product.query.all()
     return {
         'status': 'ok',
         'total_results': len(products),
         'products': [p.to_dict() for p in products]
     }
 
-@shop.route('/api/products/<int:product_id')
-def apiSinglePost(product_id):
+@shop.route('/api/products/<int:product_id>')
+def apiSingleProduct(product_id):
     product = Product.query.filter_by(id=product_id).first()
     if product is None:
         return {
@@ -65,16 +66,30 @@ def apiSinglePost(product_id):
     return {
         'status': 'ok',
         'total_results': 1,
-        'products': product.to.dict()
-    }
+        'product': product.to_dict()
+        }
         
+@shop.route('/api/create-post', methods=["POST"])
+@token_required
+def apiCreatePost(user):
+    data = request.json
+
+    title = data['title']
+    img_url = data['img_url']
+    caption = data['caption']
 
 
-@shop.route('/api/login', methods =["POST"])
-def apiLogin():
+    post = Post(title, img_url, caption, user.id)
+
+    db.session.add(post)
+    db.session.commit()
+
     return {
         'status': 'ok',
+        'message': 'Successfully create a new post.',
+        'post': post.to_dict()
     }
+
 
 
     
